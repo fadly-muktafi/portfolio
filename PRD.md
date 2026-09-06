@@ -178,14 +178,14 @@ Vercel Analytics only (cookieless). Form data emailed to owner only; nothing sto
 - **Icons:** `@phosphor-icons/react` (single icon family) · **Fonts:** 2 variable families via `next/font` (final picks in Visual-System.md)
 - **Deploy:** Vercel, auto-deploy from `main`
 
-**Structure** (code lives in `web/` because npm forbids the capitalized parent folder; docs stay at root):
+**Structure** (project root; `@` alias → project root):
 ```
-web/app/            layout.tsx, page.tsx, api/contact/route.ts
-web/components/     sections/ (hero, about, experience, skills, contact, footer)
-                    fx/ (magnetic, smooth-scroll, webgl-hero, grain)
-                    ui/ (button, chip, toast, accordion, ...)
-web/lib/            content.ts (typed content data, CMS-ready)
-web/public/         photo, cv.pdf, og.png, favicons
+app/            layout.tsx, page.tsx, api/contact/route.ts
+components/     sections/ (hero, about, experience, skills, contact, footer)
+                fx/ (magnetic, smooth-scroll, webgl-hero, grain)
+                ui/ (button, chip, toast, accordion, ...)
+lib/            content.ts (typed content data, CMS-ready)
+public/         photo, cv.pdf, og.png, favicons
 ```
 
 **Content-as-data:** all experience/skills defined in typed `lib/content.ts` — single source of truth, easy to update.
