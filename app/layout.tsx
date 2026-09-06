@@ -48,7 +48,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-dvh bg-bg font-display text-text">
+        {/* Blueprint grid, global bottom layer (Visual-System §6) */}
+        <div
+          aria-hidden
+          className="grid-lines pointer-events-none fixed inset-0 -z-10"
+        />
         {children}
+        {/* Film grain, global top layer (z-70, inert) */}
+        <div aria-hidden className="grain" />
       </body>
     </html>
   );
