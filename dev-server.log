@@ -188,3 +188,5 @@ TypeError: Invalid URL
 [browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
 ✓ Compiled in 84ms
  GET / 200 in 52ms (next.js: 9ms, application-code: 43ms)
+ GET / 200 in 85ms (next.js: 4ms, application-code: 81ms)
+[browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
