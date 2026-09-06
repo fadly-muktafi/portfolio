@@ -10,3 +10,181 @@
 
  GET / 200 in 2.9s (next.js: 2.6s, application-code: 296ms)
  GET / 200 in 257ms (next.js: 136ms, application-code: 121ms)
+⨯ ReferenceError: Image is not defined
+    at About (components\sections\about.tsx:18:18)
+  16 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  17 |           <figure className="glass relative aspect-[4/5] overflow-hidden rounded-card">
+> 18 |                 <Image src={about.photo.src} alt={about.photo.alt} fill
+     |                  ^
+  19 |                   className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  20 |             <span
+  21 |               aria-hidden {
+  digest: '71179345'
+}
+ GET / 200 in 68ms (next.js: 12ms, application-code: 55ms)
+[browser] Uncaught ReferenceError: Image is not defined
+    at About (components\sections\about.tsx:18:18)
+  16 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  17 |           <figure className="glass relative aspect-[4/5] overflow-hidden rounded-card">
+> 18 |                 <Image src={about.photo.src} alt={about.photo.alt} fill
+     |                  ^
+  19 |                   className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  20 |             <span
+  21 |               aria-hidden
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⨯ ReferenceError: Image is not defined
+    at About (components\sections\about.tsx:18:18)
+  16 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  17 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 18 |                 <Image src={about.photo.src} alt={about.photo.alt} fill
+     |                  ^
+  19 |                   className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  20 |             <span
+  21 |               aria-hidden {
+  digest: '71179345'
+}
+ GET / 500 in 151ms (next.js: 27ms, application-code: 124ms)
+ GET / 200 in 219ms (next.js: 27ms, application-code: 193ms)
+ GET /photo.jpg 404 in 898ms (next.js: 816ms, application-code: 82ms)
+⨯ The requested resource isn't a valid image for /photo.jpg received null
+ GET / 200 in 45ms (next.js: 10ms, application-code: 35ms)
+ GET / 200 in 76ms (next.js: 5ms, application-code: 72ms)
+ GET /photo.jpg 404 in 71ms (next.js: 14ms, application-code: 58ms)
+⨯ The requested resource isn't a valid image for /photo.jpg received null
+[browser] Image with src "/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET / 200 in 45ms (next.js: 10ms, application-code: 35ms)
+ GET / 200 in 79ms (next.js: 5ms, application-code: 74ms)
+ GET /photo.jpg 404 in 63ms (next.js: 6ms, application-code: 57ms)
+⨯ The requested resource isn't a valid image for /photo.jpg received null
+[browser] Image with src "/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET / 200 in 42ms (next.js: 11ms, application-code: 31ms)
+ GET / 200 in 47ms (next.js: 11ms, application-code: 36ms)
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+[browser] Uncaught Error: Failed to parse src "imges/photo.jpg" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+TypeError: Invalid URL
+    at ignore-listed frames {
+  code: 'ERR_INVALID_URL',
+  input: 'images/photo.jpg'
+}
+⨯ Error: Failed to parse src "images/photo.jpg" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at ignore-listed frames {
+  digest: '3628123641@E63'
+}
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at Set.forEach (<anonymous>) (<anonymous>)
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at Set.forEach (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+ GET / 500 in 299ms (next.js: 12ms, application-code: 287ms)
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at Set.forEach (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+[browser] Uncaught Error: Failed to parse src "imges/photo.jpg" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at Array.map (<anonymous>)
+    at Set.forEach (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+[browser] TypeError: Failed to construct 'URL': Invalid URL
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden (<anonymous>)
+[browser] Uncaught Error: Failed to parse src "images/photo.jpg" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at Array.map (<anonymous>)
+    at About (components\sections\about.tsx:19:13)
+    at Page (app\page.tsx:22:9)
+  17 |         <Reveal className="md:col-span-5 lg:col-span-4">
+  18 |           <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+> 19 |             <Image src={about.photo.src} alt={about.photo.alt} fill
+     |             ^
+  20 |               className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+  21 |             <span
+  22 |               aria-hidden
+ GET / 200 in 111ms (next.js: 19ms, application-code: 92ms)
+[browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET / 200 in 80ms (next.js: 5ms, application-code: 75ms)
+[browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET / 200 in 65ms (next.js: 17ms, application-code: 48ms)
+✓ Compiled in 283ms
+ GET / 200 in 63ms (next.js: 16ms, application-code: 48ms)
+ GET / 200 in 96ms (next.js: 5ms, application-code: 91ms)
+[browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET / 200 in 76ms (next.js: 3ms, application-code: 73ms)
+[browser] Image with src "/images/photo.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+✓ Compiled in 84ms
+ GET / 200 in 52ms (next.js: 9ms, application-code: 43ms)

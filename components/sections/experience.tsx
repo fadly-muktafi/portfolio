@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -12,83 +12,56 @@ import { experience, type ExperienceItem } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 /**
- * Sticky-stack deck (UX-Blueprint §4.4): CSS sticky stacking,
- * each card dims and scales down subtly as the next one arrives.
- * No GSAP. Motion only, reduced-motion safe.
+ * Sticky-stack deck (UX-Blueprint §4.4).
+ *
+ * All cards are DIRECT children of one shared stack parent: a sticky
+ * element can only stick within the range of its parent, so the parent
+ * must be the tall container that holds the whole deck. Each card sticks
+ * near the top (offset per index, creating the visible "lip") and the
+ * next card scrolls over it.
+ *
+ * The card being covered dims and scales down, driven by a zero-height
+ * SENTINEL placed exactly before the next card. Sentinels are plain
+ * in-flow elements so their scroll position is always measurable,
+ * unlike the sticky cards themselves (which freeze visually).
+ *
+ * Cards are opaque (bg-bg-elevated) so the card below never bleeds through.
+ * Desktop + motion-on only; reduced motion and mobile stack normally.
  */
 
-function Card({
-  item,
-  index,
-  open,
-  onToggle,
-}: {
-  item: ExperienceItem;
-  index: number;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
+function useDeckMotionEnabled() {
   const reduce = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.55]);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
-  return (
-    <div
-      ref={ref}
-      className="md:sticky"
-      style={{ top: `calc(6rem + ${index * 0.75}rem)` }}
-    >
-      <motion.article
-        style={reduce ? undefined : { scale, opacity }}
-        className="glass w-full overflow-hidden rounded-card"
-        aria-label={`${item.role} at ${item.company}`}
-      >
-        {/* Collapsed skim layer */}
-        <div className="p-6 md:p-10">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
-              {item.year} · {item.period}
-            </p>
-            <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
-              {item.location}
-            </p>
-          </div>
-
-          <h3 className="mt-4 font-display text-h3 font-medium text-text">
-            {item.role}
-          </h3>
-          <p className="mt-1 text-base text-text-secondary">{item.company}</p>
-          <p className="mt-4 max-w-[65ch] text-sm leading-relaxed text-text-secondary">
-            {item.context}
-          </p>
-
-          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Stack used">
-            {item.stack.map((tech) => (
-              <li
-                key={tech}
-                className="rounded-chip border border-line px-3 py-1 font-mono text-[13px] text-text-secondary transition-colors duration-200 hover:border-accent hover:text-accent"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.article>
-
-      {/* Expand-in-place detail, attached to its card */}
-      <Accordion item={item} open={open} onToggle={onToggle} />
-    </div>
-  );
+  return !reduce && isDesktop;
 }
 
 export function Experience() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const motionEnabled = useDeckMotionEnabled();
+
+  /* One sentinel per pair is enough for two items: it sits exactly at
+     card 2's top edge and scrolls normally. */
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sentinelRef,
+    offset: ["start end", "start start"],
+  });
+  /* Recess the covered card as the next one arrives. The stuck card
+     docks ~108px below the viewport top, so the overlap window is the
+     last stretch of the sentinel's approach. */
+  const recessScale = useTransform(scrollYProgress, [0.72, 0.95], [1, 0.95]);
+  const recessOpacity = useTransform(scrollYProgress, [0.72, 0.95], [1, 0.5]);
+
+  const items = experience.items;
 
   return (
     <section
@@ -102,16 +75,67 @@ export function Experience() {
         eyebrow={experience.eyebrow}
       />
 
-      {/* Sticky deck */}
-      <div className="relative mx-auto flex max-w-4xl flex-col gap-6">
-        {experience.items.map((item, i) => (
-          <Card
-            key={item.id}
-            item={item}
-            index={i}
-            open={openId === item.id}
-            onToggle={() => setOpenId(openId === item.id ? null : item.id)}
-          />
+      {/* The deck: sticky siblings in one tall parent */}
+      <div className="relative mx-auto max-w-4xl">
+        {items.map((item, i) => (
+          <Fragment key={item.id}>
+            {i > 0 && (
+              <div ref={sentinelRef} aria-hidden className="mt-6 h-0 w-full" />
+            )}
+            <div
+              className="md:sticky"
+              style={{ top: `calc(6rem + ${i * 0.75}rem)` }}
+            >
+              <motion.article
+                style={
+                  i < items.length - 1 && motionEnabled
+                    ? { scale: recessScale, opacity: recessOpacity }
+                    : undefined
+                }
+                className="w-full overflow-hidden rounded-card border border-line bg-bg-elevated"
+                aria-label={`${item.role} at ${item.company}`}
+              >
+                {/* Collapsed skim layer */}
+                <div className="p-6 md:p-10">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <p className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
+                      {item.year} · {item.period}
+                    </p>
+                    <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
+                      {item.location}
+                    </p>
+                  </div>
+
+                  <h3 className="mt-4 font-display text-h3 font-medium text-text">
+                    {item.role}
+                  </h3>
+                  <p className="mt-1 text-base text-text-secondary">
+                    {item.company}
+                  </p>
+                  <p className="mt-4 max-w-[65ch] text-sm leading-relaxed text-text-secondary">
+                    {item.context}
+                  </p>
+
+                  <ul className="mt-5 flex flex-wrap gap-2" aria-label="Stack used">
+                    {item.stack.map((tech) => (
+                      <li
+                        key={tech}
+                        className="rounded-chip border border-line px-3 py-1 font-mono text-[13px] text-text-secondary transition-colors duration-200 hover:border-accent hover:text-accent"
+                      >
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.article>
+
+              <Accordion
+                item={item}
+                open={openId === item.id}
+                onToggle={() => setOpenId(openId === item.id ? null : item.id)}
+              />
+            </div>
+          </Fragment>
         ))}
       </div>
 
@@ -153,7 +177,7 @@ function Accordion({
   const reduce = useReducedMotion();
 
   return (
-    <div className="glass mt-[-1px] rounded-b-card border-t-0">
+    <div className="mt-[-1px] rounded-b-card border border-t-0 border-line bg-bg-elevated">
       <button
         type="button"
         onClick={onToggle}
@@ -169,7 +193,7 @@ function Accordion({
         >
           +
         </motion.span>
-        {open ? "- Close" : "+ View case"}
+        {open ? "Close" : "View case"}
       </button>
 
       <AnimatePresence initial={false}>

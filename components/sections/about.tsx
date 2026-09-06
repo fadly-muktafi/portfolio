@@ -1,6 +1,7 @@
 import { about } from "@/lib/content";
 import { Reveal } from "@/components/fx/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import Image from "next/image";
 
 export function About() {
   return (
@@ -14,16 +15,9 @@ export function About() {
       <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
         {/* Photo: hi-res asset pending (PRD §9). Monogram placeholder. */}
         <Reveal className="md:col-span-5 lg:col-span-4">
-          <figure className="glass relative aspect-[4/5] overflow-hidden rounded-card">
-            {/* Swap this placeholder for next/image when /public/photo.jpg lands:
-                <Image src={about.photo.src} alt={about.photo.alt} fill
-                  className="object-cover grayscale transition duration-500 hover:grayscale-0" /> */}
-            <span
-              aria-hidden
-              className="absolute inset-0 flex items-center justify-center font-display text-[18vw] font-medium text-accent/20 select-none md:text-[9rem]"
-            >
-              FM
-            </span>
+          <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
+            <Image src={about.photo.src} alt={about.photo.alt} fill
+              className="object-cover grayscale transition duration-500 hover:grayscale-0" />
             <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.12em] text-text-muted uppercase">
               + +
             </span>

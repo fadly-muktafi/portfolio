@@ -73,7 +73,7 @@ export const about = {
   numeral: "02",
   title: "I like hard problems and honest questions.",
   photo: {
-    src: "/photo.jpg", // TODO(owner): hi-res photo asset, see PRD §9
+    src: "/images/photo.jpg", // TODO(owner): hi-res photo asset, see PRD §9
     alt: "Portrait of Ahmad Fadly Muktafi",
   },
   bio: [
