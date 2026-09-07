@@ -277,7 +277,8 @@ export const contact = {
     },
   },
   direct: {
-    heading: "Prefer email?",
+    heading: "Email Address",
+    socialsLabel: "Elsewhere",
     copyLabel: "Copy",
     copiedLabel: "Copied.",
     toastCopied: "Email copied to clipboard",

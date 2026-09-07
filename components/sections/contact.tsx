@@ -166,64 +166,76 @@ export function Contact() {
 
         {/* Direct channels */}
         <Reveal delay={0.1}>
-          <div className="space-y-8 md:pt-1">
+          <div className="flex h-full flex-col gap-8">
+            {/* Email */}
             <div>
-              <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
+              <p className="font-mono text-xs mb-2 tracking-[0.12em] text-text-muted uppercase">
                 {contact.direct.heading}
               </p>
-              <div className="mt-3 flex flex-wrap items-center gap-3">
-                <a
-                  href={`mailto:${site.email}`}
-                  className="text-h3 font-medium text-text transition-colors hover:text-accent"
-                >
-                  {site.email}
-                </a>
-                <Magnetic>
-                  <button
-                    type="button"
-                    onClick={copyEmail}
-                    className="inline-flex h-10 items-center gap-2 rounded-chip border border-line px-4 font-mono text-xs tracking-[0.12em] text-text-secondary uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
+              <div className="glass rounded-card p-5">
+                <div className="flex flex-wrap items-center justify-between">
+                  <a
+                    href={`mailto:${site.email}`}
+                    className="text-base font-medium break-all text-text transition-colors hover:text-accent md:text-h3"
                   >
-                    <Copy size={16} aria-hidden />
-                    {copied ? contact.direct.copiedLabel : contact.direct.copyLabel}
-                  </button>
-                </Magnetic>
+                    {site.email}
+                  </a>
+                  <Magnetic>
+                    <button
+                      type="button"
+                      onClick={copyEmail}
+                      className="inline-flex h-10 shrink-0 items-center gap-2 rounded-chip border border-line px-4 font-mono text-xs tracking-[0.12em] text-text-secondary uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
+                    >
+                      <Copy size={16} aria-hidden />
+                      {copied ? contact.direct.copiedLabel : contact.direct.copyLabel}
+                    </button>
+                  </Magnetic>
+                </div>
+                <p className="mt-3 font-mono text-xs text-text-muted">
+                  {contact.direct.note}
+                </p>
               </div>
             </div>
 
-            <ul className="space-y-3">
-              {site.socials
-                .filter((s) => s.href !== "")
-                .map((s) => (
-                  <li key={s.label}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1 text-base text-text transition-colors hover:text-accent"
-                    >
-                      {s.label}
-                      <ArrowUpRight
-                        size={16}
-                        aria-hidden
-                        className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      />
-                    </a>
-                  </li>
-                ))}
-            </ul>
-
+            {/* Socials */}
             <div>
-              <a
-                href={site.cvPath}
-                download
-                className="inline-flex h-11 items-center rounded-full border border-line px-6 font-mono text-xs tracking-[0.12em] text-text uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
-              >
-                Download CV
-              </a>
-              <p className="mt-4 font-mono text-xs text-text-muted">
-                {contact.direct.note}
+              <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
+                {contact.direct.socialsLabel}
               </p>
+              <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {site.socials
+                  .filter((s) => s.href !== "")
+                  .map((s) => (
+                    <li key={s.label}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between rounded-chip border border-line px-4 py-3 text-sm text-text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                      >
+                        {s.label}
+                        <ArrowUpRight
+                          size={16}
+                          aria-hidden
+                          className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        />
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            {/* CV */}
+            <div className="mt-auto pt-2">
+              <Magnetic className="inline-block">
+                <a
+                  href={site.cvPath}
+                  download
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-6 font-mono text-xs tracking-[0.12em] text-text uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
+                >
+                  Download CV
+                </a>
+              </Magnetic>
             </div>
           </div>
         </Reveal>
