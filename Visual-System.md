@@ -157,9 +157,9 @@ Each section = oversized ghost numeral (a display element, not an eyebrow) → d
 
 The visual depth comes from **exactly three stacked layers** — consistent everywhere:
 
-1. **Grid layer (bottom)** — hairline blueprint grid/column guides, `--line` at 40–60% opacity. Subtle "+" registration ticks at intersections, rendered via background SVG/CSS gradient. Static (no animation).
+1. **Void layer (bottom)** — the background stays clean near-black. No grid wallpaper: decoration without a job is banned. The dark field makes the grain, mint accent, and hero particles carry the atmosphere.
 2. **Glass layer (middle)** — cards and nav use glassmorphism: `background: var(--surface-glass); backdrop-filter: blur(12px); border: 1px solid var(--line)`. On hover, border tint shifts toward `--accent` (→ `--accent-dim` border).
-3. **Grain layer (top)** — film grain overlay, SVG feTurbulence or pre-generated noise PNG, `opacity: 0.05`, `mix-blend-mode: overlay`, `pointer-events: none`, fixed to viewport. One global instance — never per-component.
+3. **Grain layer (top)** — film-grain overlay: inline-SVG `feTurbulence` noise with SVG-level contrast boost, `opacity: 0.08`, **normal blending** (overlay dies on near-black), `pointer-events: none`, `inset: -50%` + `steps(6)` flick at ~0.8s for a cinematic feel. One global instance, off under reduced motion.
 
 Additional surface rules
 - Cards have **no drop shadows** (dark theme). Depth = border + glass + grain only.

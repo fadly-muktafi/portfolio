@@ -1,23 +1,28 @@
+import Image from "next/image";
 import { about } from "@/lib/content";
 import { Reveal } from "@/components/fx/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
-import Image from "next/image";
 
 export function About() {
   return (
     <section
       id="about"
       aria-labelledby="about-title"
-      className="relative mx-auto max-w-[1440px] scroll-mt-24 px-5 py-24 md:px-10 md:py-40"
+      className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
       <SectionHeading numeral={about.numeral} title={about.title} />
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-        {/* Photo: hi-res asset pending (PRD §9). Monogram placeholder. */}
+        {/* Photo: grayscale at rest, color on hover (Visual-System §8) */}
         <Reveal className="md:col-span-5 lg:col-span-4">
-          <figure className="glass relative aspect-4/5 overflow-hidden rounded-card">
-            <Image src={about.photo.src} alt={about.photo.alt} fill
-              className="object-cover grayscale transition duration-500 hover:grayscale-0" />
+          <figure className="glass group relative aspect-3/4 overflow-hidden rounded-card">
+            <Image
+              src={about.photo.src}
+              alt={about.photo.alt}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 42vw, 90vw"
+              className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+            />
             <span className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.12em] text-text-muted uppercase">
               + +
             </span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -9,7 +9,8 @@ import {
   AnimatePresence,
 } from "motion/react";
 import { List, X, DownloadSimple } from "@phosphor-icons/react";
-import { nav, a11y } from "@/lib/content";
+import { nav, a11y, site } from "@/lib/content";
+import { scrollLock } from "@/lib/scroll";
 import { Magnetic } from "@/components/fx/magnetic";
 
 const SECTION_IDS = nav.links.map((l) => l.href.slice(1));
@@ -23,28 +24,37 @@ export function Nav() {
   const { scrollY, scrollYProgress } = useScroll();
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
-  /* Scrollspy */
-  useEffect(() => {
-    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
-      (el): el is HTMLElement => el !== null,
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+  /* Scrollspy: active = last section whose top passed the 40%-of-viewport
+     line. Returning to the hero (above the first section) clears it, so
+     no stale highlight can stick. setActive only fires on real changes. */
+  const activeRef = useRef<string | null>(null);
+  const updateActive = useCallback(
+    (y: number) => {
+      const line = y + window.innerHeight * 0.4;
+      let next: string | null = null;
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= line) next = id;
+      }
+      if (next !== activeRef.current) {
+        activeRef.current = next;
+        setActive(next);
+      }
+    },
+    [],
+  );
 
-  /* Body scroll lock for the overlay menu */
+  useMotionValueEvent(scrollY, "change", updateActive);
+  useEffect(() => updateActive(window.scrollY), [updateActive]);
+
+  /* Body scroll lock for the overlay menu (stops Lenis too) */
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (open) scrollLock.lenis?.stop();
+    else scrollLock.lenis?.start();
     return () => {
       document.body.style.overflow = "";
+      scrollLock.lenis?.start();
     };
   }, [open]);
 
@@ -62,13 +72,13 @@ export function Nav() {
       <motion.div
         aria-hidden
         style={{ scaleX: scrollYProgress }}
-        className="absolute inset-x-0 top-0 h-px origin-left bg-accent"
+        className="absolute inset-x-0 top-0 h-0.5 z-10 origin-left bg-accent"
       />
 
       <nav
         aria-label="Primary"
-        className={`mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 transition-all duration-300 md:px-10 ${
-          scrolled ? "glass border-b border-line" : ""
+        className={`mx-auto flex h-16 max-w-360 items-center justify-between px-5 transition-all duration-300 md:px-10 ${
+          scrolled ? "glass backdrop-blur-sm rounded-b-xl border-b-2 border-line" : ""
         }`}
       >
         <a
@@ -103,7 +113,7 @@ export function Nav() {
         <div className="hidden md:block">
           <Magnetic>
             <a
-              href="/cv.pdf"
+              href={site.cvPath}
               download
               className="inline-flex h-10 items-center gap-2 rounded-full bg-accent px-5 font-mono text-xs font-medium uppercase tracking-[0.12em] text-accent-ink transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98]"
             >
@@ -135,7 +145,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] flex flex-col justify-between bg-bg px-5 pt-24 pb-10 md:hidden"
+            className="fixed inset-0 z-60 flex flex-col justify-between bg-bg px-5 pt-24 pb-10 md:hidden"
           >
             <ul className="flex flex-col gap-6">
               {nav.links.map((link, i) => (
@@ -165,7 +175,7 @@ export function Nav() {
               transition={{ delay: 0.3 }}
             >
               <a
-                href="/cv.pdf"
+                href={site.cvPath}
                 download
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 font-mono text-xs font-medium uppercase tracking-[0.12em] text-accent-ink"
               >

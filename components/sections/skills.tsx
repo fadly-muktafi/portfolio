@@ -18,7 +18,7 @@ export function Skills() {
     <section
       id="skills"
       aria-labelledby="skills-title"
-      className="relative mx-auto max-w-[1440px] scroll-mt-24 px-5 py-24 md:px-10 md:py-40"
+      className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
       <SectionHeading numeral={skills.numeral} title={skills.title} />
 

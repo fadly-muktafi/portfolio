@@ -70,7 +70,7 @@ Conventions: [n] = content block order; "reveal" = scroll-in animation (`--ease-
 - **Nav** — §2. States: top (transparent) → scrolled (glass + hairline). Always present.
 - **Magnetic hover** — desktop only: CTAs and nav links pull ≤4px toward the pointer (Motion values, spring 400/30). No custom cursor element: native cursor stays for accessibility and performance.
 - **Progress hairline** — 1px, accent, under nav.
-- **Grain + grid layers** — global, static, non-interactive.
+- **Grain layer** — global, inert; animated film-grain flick (steps), off under reduced motion. No grid wallpaper, no section dividers: pure void + grain.
 
 ### 4.2 Hero — #01 (first viewport, 100svh)
 

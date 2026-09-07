@@ -67,7 +67,7 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-title"
-      className="relative mx-auto max-w-[1440px] scroll-mt-24 px-5 py-24 md:px-10 md:py-40"
+      className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
       <SectionHeading
         numeral={experience.numeral}
@@ -177,7 +177,7 @@ function Accordion({
   const reduce = useReducedMotion();
 
   return (
-    <div className="mt-[-1px] rounded-b-card border border-t-0 border-line bg-bg-elevated">
+    <div className="-mt-px rounded-b-card border border-t-0 border-line bg-bg-elevated">
       <button
         type="button"
         onClick={onToggle}

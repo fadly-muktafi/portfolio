@@ -10,6 +10,7 @@ import {
 } from "motion/react";
 import { hero } from "@/lib/content";
 import { Magnetic } from "@/components/fx/magnetic";
+import { Hero3D } from "@/components/fx/hero-3d";
 
 const container = {
   hidden: {},
@@ -82,34 +83,30 @@ export function Hero() {
       aria-label="Introduction"
       className="relative flex min-h-dvh flex-col justify-end overflow-hidden px-5 pb-16 md:px-10 md:pb-20"
     >
-      {/* Static base; 3D ambient mounts here in M6 (lazy).
-          Accent glow moment allowed once (Visual-System §6). */}
+      {/* Layer 1: static gradient (fallback that always works).
+          Layer 2: lazy 3D ambient field mounts on top when the gate passes. */}
       <div
         aria-hidden
-        id="hero-3d-slot"
         className="absolute inset-0"
         style={{
           background:
             "radial-gradient(60% 45% at 75% 20%, var(--color-accent-dim), transparent 70%)",
         }}
       />
+      <Hero3D />
 
       <motion.div
         variants={container}
         initial={reduce ? false : "hidden"}
         animate="show"
-        className="relative max-w-[1440px]"
+        className="relative max-w-360"
       >
         {/* Eyebrow: role + live availability status */}
         <motion.p
           variants={item}
           className="mb-6 flex items-center gap-2 font-mono text-xs tracking-[0.12em] text-text-secondary uppercase"
         >
-          <span
-            aria-hidden
-            className="animate-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-accent"
-          />
-          [ {hero.eyebrowRole} · {hero.eyebrowStatus} ]
+          [ {hero.eyebrowRole} ]
         </motion.p>
 
         <motion.h1

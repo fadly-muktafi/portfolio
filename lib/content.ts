@@ -40,12 +40,15 @@ export const site = {
   role: "Software Engineer",
   location: "Jakarta, Indonesia",
   email: "fadlymuktafi@gmail.com",
-  cvPath: "/cv.pdf",
-  // TODO(owner): supply real URLs before launch (PRD §9)
+  cvPath: "/CV - Ahmad Fadly Muktafi.pdf",
   socials: [
-    { label: "GitHub", href: "" },
-    { label: "LinkedIn", href: "" },
-  ],
+    { label: "GitHub", href: "https://github.com/fadly-muktafi" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/ahmad-fadly-muktafi",
+    },
+    { label: "Instagram", href: "https://www.instagram.com/dlymuktafi" },
+  ] as { label: string; href: string }[], /* wide type: empty href = hidden */
 } as const;
 
 export const nav = {
@@ -61,7 +64,6 @@ export const nav = {
 export const hero = {
   // Role + live availability status in one eyebrow (UX-Blueprint §4.2)
   eyebrowRole: "SOFTWARE ENGINEER",
-  eyebrowStatus: "OPEN TO WORK",
   line1: "FADLY",
   line2: "MUKTAFI.",
   lead: "Fullstack developer building reliable web products, from database to interface.",
@@ -73,7 +75,7 @@ export const about = {
   numeral: "02",
   title: "I like hard problems and honest questions.",
   photo: {
-    src: "/images/photo.jpg", // TODO(owner): hi-res photo asset, see PRD §9
+    src: "/photo.jpg",
     alt: "Portrait of Ahmad Fadly Muktafi",
   },
   bio: [
@@ -81,12 +83,12 @@ export const about = {
     "In the past year I shipped production code at two companies: an enterprise HR system on a Java stack, and a foundation's website rebuilt to be faster and friendlier.",
     "Outside of code I lead teams, from my school's ICT division to a basketball squad.",
   ],
-  facts: ["JAKARTA, ID", "SMKN 64 / RPL", "CLASS OF 2026", "2 INTERNSHIPS"],
+  facts: ["SMKN 64 JAKARTA", "FULLSTACK DEVELOPER", "1+ YEAR EXPERIENCE"],
   principles: [
     {
       n: "01",
       title: "Dig into the problem",
-      body: "Understand first, code second. The right fix starts with the right question.",
+      body: "Understand before coding. Right questions, right fixes.",
     },
     {
       n: "02",

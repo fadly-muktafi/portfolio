@@ -14,6 +14,14 @@
 
 :root {
   --accent-h: 140; /* mint, the owner's brand hue */
+
+  /* === GRAIN KNOBS (atur sendiri di sini) === */
+  --grain-opacity: 0.25; /* kekuatan grain: 0.05 halus · 0.25 tegas · >0.3 mulai ramai */
+  --grain-speed: 0.25s;   /* durasi flick: makin kecil = makin cepat/energik */
+  /* Kekasaran butir & pola noise: di dalam SVG pada .grain di bawah —
+     'baseFrequency' (makany besar = butir makin halus/rapat) dan
+     'slope' + 'intercept' (kontras speckle). */
+
   transition: --accent-h 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -21,7 +29,7 @@
   /* Color (Visual-System §3) */
   --color-bg: #0a0b0a;
   --color-bg-elevated: #101210;
-  --color-line: rgba(242, 245, 242, 0.08);
+  --color-line: rgba(236, 249, 236, 0.1);
   --color-text: #f2f5f2;
   --color-text-secondary: #a9afa8;
   --color-text-muted: #7c837b;
@@ -101,41 +109,35 @@
     background: var(--color-bg);
   }
   html {
-    scrollbar-color: rgba(242, 245, 242, 0.24) var(--color-bg);
+    scrollbar-color: rgba(236, 249, 236, 0.25) var(--color-bg);
   }
 }
 
 @layer components {
   /* Glassmorphism (Visual-System §6, middle layer) */
   .glass {
-    background: rgba(242, 245, 242, 0.04);
-    border: 1px solid var(--color-line);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  @supports not (backdrop-filter: blur(1px)) {
-    .glass {
-      background: var(--color-bg-elevated);
-    }
+    background: rgba(236, 249, 236, 0.1);
+    border: 2px solid var(--color-line);
   }
 
-  /* Blueprint grid, bottom texture layer */
-  .grid-lines {
-    background-image:
-      linear-gradient(to right, var(--color-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
-    background-size: 96px 96px;
-  }
-
-  /* Film grain, global top layer. One instance, fixed, inert. */
+  /* Film grain, global top layer. One instance, inert.
+     NOTE: normal blending, NOT overlay. Overlay on near-black kills the
+     noise (dark base * 0.5 noise = ~no change). Contrast is boosted at the
+     SVG level; the element is oversized so the steps() flick never
+     exposes an edge. Off entirely under reduced motion. */
   .grain {
     position: fixed;
-    inset: 0;
+    inset: -5%;
     z-index: 70;
     pointer-events: none;
-    opacity: 0.05;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.25' numOctaves='5' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='1' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='1' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .grain {
+      animation: grain-shift var(--grain-speed) steps(6) infinite;
+    }
   }
 
   .animate-marquee {
@@ -187,6 +189,18 @@
   }
 }
 
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -203,6 +217,28 @@
   }
   50% {
     opacity: 0.35;
+  }
+}
+
+/* Film-grain flick: hard steps, cinematic (not a smooth drift) */
+@keyframes grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2%, 3%);
+  }
+  40% {
+    transform: translate(3%, -1%);
+  }
+  60% {
+    transform: translate(-1%, -3%);
+  }
+  80% {
+    transform: translate(2%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
   }
 }
 

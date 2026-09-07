@@ -81,7 +81,7 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="relative mx-auto max-w-[1440px] scroll-mt-24 px-5 py-24 md:px-10 md:py-40"
+      className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
       <SectionHeading numeral={contact.numeral} title={contact.title} />
 
@@ -239,7 +239,7 @@ export function Contact() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="glass fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-chip border-l-2 border-l-accent px-5 py-3 font-mono text-sm text-text"
+            className="glass fixed bottom-6 left-1/2 z-80 -translate-x-1/2 rounded-chip border-l-2 border-l-accent px-5 py-3 font-mono text-sm text-text"
           >
             {toast.message}
           </motion.div>

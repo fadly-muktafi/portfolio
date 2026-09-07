@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { SmoothScroll } from "@/components/fx/smooth-scroll";
 import "./globals.css";
 
 const display = Space_Grotesk({
@@ -48,11 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-dvh bg-bg font-display text-text">
-        {/* Blueprint grid, global bottom layer (Visual-System §6) */}
-        <div
-          aria-hidden
-          className="grid-lines pointer-events-none fixed inset-0 -z-10"
-        />
+        <SmoothScroll />
         {children}
         {/* Film grain, global top layer (z-70, inert) */}
         <div aria-hidden className="grain" />
