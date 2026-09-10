@@ -144,7 +144,7 @@ export function Contact({ githubSlot }: { githubSlot?: React.ReactNode }) {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 font-mono text-xs font-medium tracking-[0.12em] text-accent-ink uppercase transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 font-mono text-xs font-medium tracking-[0.12em] text-accent-ink uppercase transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
               >
                 {status === "sending" ? (
                   <>
@@ -230,12 +230,12 @@ export function Contact({ githubSlot }: { githubSlot?: React.ReactNode }) {
             {githubSlot}
 
             {/* CV */}
-            <div className="mt-auto pt-2">
+            <div className="mt-auto">
               <Magnetic className="inline-block">
                 <a
                   href={site.cvPath}
                   download
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-6 font-mono text-xs tracking-[0.12em] text-text uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
+                  className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 font-mono text-xs tracking-[0.12em] text-text uppercase transition-colors duration-200 hover:border-accent hover:text-accent"
                 >
                   Download CV
                 </a>
