@@ -11,7 +11,7 @@ import { Magnetic } from "@/components/fx/magnetic";
 type Status = "idle" | "sending" | "sent" | "error";
 type Toast = { id: number; message: string } | null;
 
-export function Contact() {
+export function Contact({ githubSlot }: { githubSlot?: React.ReactNode }) {
   const [status, setStatus] = useState<Status>("idle");
   const [toast, setToast] = useState<Toast>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -131,7 +131,7 @@ export function Contact() {
                 rows={5}
                 aria-invalid={!!errors.message}
                 aria-describedby={errors.message ? "message-error" : undefined}
-                className="w-full resize-y rounded-chip border border-line bg-bg-elevated px-4 py-3 text-base text-text transition-colors focus:border-accent focus:outline-none"
+                className="w-full resize-y rounded-chip border border-line bg-bg-elevated px-3.5 py-3.5 text-base text-text transition-colors focus:border-accent focus:outline-none"
               />
               {errors.message && (
                 <p id="message-error" role="alert" className="mt-2 font-mono text-xs text-error">
@@ -166,7 +166,7 @@ export function Contact() {
 
         {/* Direct channels */}
         <Reveal delay={0.1}>
-          <div className="flex h-full flex-col gap-8">
+          <div className="flex h-full flex-col gap-5">
             {/* Email */}
             <div>
               <p className="font-mono text-xs mb-2 tracking-[0.12em] text-text-muted uppercase">
@@ -191,7 +191,7 @@ export function Contact() {
                     </button>
                   </Magnetic>
                 </div>
-                <p className="mt-3 font-mono text-xs text-text-muted">
+                <p className="mt-9 font-mono text-base text-text-muted">
                   {contact.direct.note}
                 </p>
               </div>
@@ -199,10 +199,10 @@ export function Contact() {
 
             {/* Socials */}
             <div>
-              <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
+              <p className="font-mono text-xs tracking-[0.125em] text-text-muted uppercase">
                 {contact.direct.socialsLabel}
               </p>
-              <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <ul className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {site.socials
                   .filter((s) => s.href !== "")
                   .map((s) => (
@@ -211,7 +211,7 @@ export function Contact() {
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between rounded-chip border border-line px-4 py-3 text-sm text-text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                        className="group flex items-center justify-between rounded-chip border border-line px-3.5 py-3.5 text-sm text-text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
                       >
                         {s.label}
                         <ArrowUpRight
@@ -224,6 +224,10 @@ export function Contact() {
                   ))}
               </ul>
             </div>
+
+            {/* GitHub contributions graph (server-rendered slot; fills the
+                whitespace between socials and the CV button) */}
+            {githubSlot}
 
             {/* CV */}
             <div className="mt-auto pt-2">

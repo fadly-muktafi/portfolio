@@ -1,14 +1,7 @@
 import { Resend } from "resend";
 import { z } from "zod";
-import { ProxyAgent, setGlobalDispatcher } from "undici";
 
-/* Local dev may sit behind an HTTP proxy; Node's fetch (undici) does not
-   use the OS proxy by default. Setting the global dispatcher here is
-   idempotent and a no-op where no proxy env exists (e.g. Vercel). */
-const proxy = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
-if (proxy) {
-  setGlobalDispatcher(new ProxyAgent(proxy));
-}
+/* Proxy handling lives in instrumentation.ts (runs once at server boot). */
 
 const schema = z.object({
   name: z.string().trim().min(2).max(80),

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Nav } from "@/components/sections/nav";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
@@ -5,6 +6,7 @@ import { Experience } from "@/components/sections/experience";
 import { Skills } from "@/components/sections/skills";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
+import { GithubContributions } from "@/components/ui/github-contributions";
 import { a11y } from "@/lib/content";
 
 export default function Page() {
@@ -22,7 +24,13 @@ export default function Page() {
         <About />
         <Experience />
         <Skills />
-        <Contact />
+        <Contact
+          githubSlot={
+            <Suspense fallback={null}>
+              <GithubContributions />
+            </Suspense>
+          }
+        />
       </main>
       <Footer />
     </>
