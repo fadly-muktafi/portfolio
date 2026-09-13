@@ -14,9 +14,9 @@ import * as THREE from "three";
 const COLS = 80;
 const ROWS = 80;
 const SPACING = 0.24;
-const AMP = 0.25; /* wave height */
+const AMP = 0.5; /* wave height */
 const SPEED = 0.25; /* travel speed (rad/s) */
-const CREST = 0.25; /* 0..1: wave value where the glow starts */
+const CREST = 0.5; /* 0..1: wave value where the glow starts */
 const GLOW_SHARPNESS = 2.5; /* higher = tighter, brighter crest */
 
 /** OKLCH -> sRGB via a 1x1 canvas (browsers resolve oklch for us). */

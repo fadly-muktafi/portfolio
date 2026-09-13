@@ -2,6 +2,7 @@ import Image from "next/image";
 import { about } from "@/lib/content";
 import { Reveal } from "@/components/fx/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { JavaMap } from "@/components/ui/java-map";
 
 export function About() {
   return (
@@ -58,6 +59,11 @@ export function About() {
                 </li>
               ))}
             </ul>
+          </Reveal>
+
+          {/* Java particle map with Jakarta marker */}
+          <Reveal delay={0.15} className="mt-22.75">
+            <JavaMap />
           </Reveal>
         </div>
       </div>

@@ -40,6 +40,57 @@ type ContributionDay = {
   contributionLevel: ContributionLevel;
 };
 
+/** Snap a date back to the previous Sunday (or itself if already Sunday). */
+function startOfWeekSunday(d: Date): Date {
+  const out = new Date(d);
+  out.setDate(out.getDate() - out.getDay());
+  out.setHours(0, 0, 0, 0);
+  return out;
+}
+
+/** Snap a date forward to the next Saturday (or itself if Saturday). */
+function endOfWeekSaturday(d: Date): Date {
+  const out = new Date(d);
+  out.setDate(out.getDate() + (6 - out.getDay()));
+  out.setHours(23, 59, 59, 999);
+  return out;
+}
+
+function toISODate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/**
+ * Rebuild the calendar into whole weeks: first column starts Sunday,
+ * last column ends Saturday. Days outside the API range render as
+ * invisible placeholders so rows/grooves align (GitHub's own graph
+ * does the same).
+ */
+function normalizeWeeks(
+  days: ContributionDay[],
+  from: Date,
+  to: Date,
+): (ContributionDay | null)[][] {
+  const byDate = new Map(days.map((d) => [d.date, d]));
+  const weeks: (ContributionDay | null)[][] = [];
+  const cursor = startOfWeekSunday(from);
+  const end = endOfWeekSaturday(to);
+
+  while (cursor <= end) {
+    const week: (ContributionDay | null)[] = [];
+    for (let dow = 0; dow < 7; dow++) {
+      const iso = toISODate(cursor);
+      week.push(byDate.get(iso) ?? null);
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    weeks.push(week);
+  }
+  return weeks;
+}
+
 /* Accent-driven palette: follows Accent Playground live (CSS var). */
 const LEVEL_BG: Record<ContributionLevel, string> = {
   NONE: "transparent",
@@ -68,7 +119,7 @@ export async function GithubContributions() {
   from.setDate(from.getDate() - WEEKS * 7);
   from.setHours(0, 0, 0, 0);
 
-  let weeks: { contributionDays: ContributionDay[] }[];
+  let apiWeeks: { contributionDays: ContributionDay[] }[];
   let total = 0;
   try {
     const res = await fetch("https://api.github.com/graphql", {
@@ -88,12 +139,16 @@ export async function GithubContributions() {
     const json = await res.json();
     const cal =
       json?.data?.user?.contributionsCollection?.contributionCalendar;
-    weeks = cal?.weeks;
+    apiWeeks = cal?.weeks;
     total = cal?.totalContributions ?? 0;
-    if (!Array.isArray(weeks) || weeks.length === 0) return null;
+    if (!Array.isArray(apiWeeks) || apiWeeks.length === 0) return null;
   } catch {
     return null;
   }
+
+  /* Flatten API weeks, then rebuild whole Sunday-to-Saturday columns */
+  const allDays = apiWeeks.flatMap((w) => w.contributionDays);
+  const weeks = normalizeWeeks(allDays, from, to);
 
   return (
     <div>
@@ -113,16 +168,26 @@ export async function GithubContributions() {
         aria-label={`GitHub contributions for ${login}: ${total} contributions in the past year`}
       >
         {weeks.map((week, wi) =>
-          week.contributionDays.map((day) => (
-            <span
-              key={`${wi}-${day.date}`}
-              title={`${day.contributionCount} contribution${day.contributionCount === 1 ? "" : "s"
+          week.map((day, di) =>
+            day === null ? (
+              <span
+                key={`${wi}-pad-${di}`}
+                aria-hidden
+                className="inline-block h-4 w-4 rounded-xs opacity-0"
+              />
+            ) : (
+              <span
+                key={`${wi}-${day.date}`}
+                title={`${day.contributionCount} contribution${
+                  day.contributionCount === 1 ? "" : "s"
                 } on ${formatDate(day.date)}`}
-              className={`inline-block h-4 w-4 rounded-xs ${day.contributionLevel === "NONE" ? "border border-line" : ""
+                className={`inline-block h-4 w-4 rounded-xs ${
+                  day.contributionLevel === "NONE" ? "border border-line" : ""
                 }`}
-              style={{ backgroundColor: LEVEL_BG[day.contributionLevel] }}
-            />
-          )),
+                style={{ backgroundColor: LEVEL_BG[day.contributionLevel] }}
+              />
+            ),
+          ),
         )}
       </div>
     </div>
