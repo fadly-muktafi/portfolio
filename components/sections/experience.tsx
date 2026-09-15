@@ -70,9 +70,7 @@ export function Experience() {
       className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
       <SectionHeading
-        numeral={experience.numeral}
         title={experience.title}
-        eyebrow={experience.eyebrow}
       />
 
       {/* The deck: sticky siblings in one tall parent */}

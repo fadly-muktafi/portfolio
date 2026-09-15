@@ -104,13 +104,11 @@ export const about = {
 } as const;
 
 export const experience: {
-  eyebrow: string;
   numeral: string;
   title: string;
   items: ExperienceItem[];
   leadership: LeadershipItem[];
 } = {
-  eyebrow: "EXPERIENCE",
   numeral: "03",
   title: "What I've shipped and learned",
   items: [

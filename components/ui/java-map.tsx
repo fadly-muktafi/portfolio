@@ -41,11 +41,12 @@ export function JavaMap() {
   const [inView, setInView] = useState(false);
   const [showChip, setShowChip] = useState(false);
 
+  /* Effective visibility: reduced-motion users see everything instantly
+     without touching React state (lint: no setState in effect body). */
+  const visible = inView || reduce;
+
   useEffect(() => {
-    if (reduce) {
-      setInView(true);
-      return;
-    }
+    if (reduce) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -144,7 +145,7 @@ export function JavaMap() {
                 cy={p.y}
                 r={2.5}
                 className="fill-text-secondary"
-                opacity={inView ? 0.5 : 0}
+                opacity={visible ? 0.5 : 0}
                 style={{
                   transition: reduce
                     ? "fill 0ms"
@@ -204,7 +205,7 @@ export function JavaMap() {
                 r={5}
                 fill="var(--color-accent)"
                 filter="url(#marker-glow)"
-                opacity={inView ? 1 : 0}
+                opacity={visible ? 1 : 0}
               />
             </g>
           </svg>
@@ -225,7 +226,7 @@ export function JavaMap() {
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="glass backdrop-blur-xs ml-3 -translate-y-1/2 inline-flex items-center gap-2 rounded-chip px-3 py-1.5 font-mono text-[10px] tracking-[0.12em] text-text uppercase whitespace-nowrap"
               >
-                South Jakarta , Jakarta
+                South Jakarta, Jakarta
               </motion.span>
             )}
           </AnimatePresence>
@@ -235,7 +236,7 @@ export function JavaMap() {
       {/* Mono footer row */}
       <div className="mt-2 flex items-center justify-between">
         <p className="font-mono text-[10px] tracking-[0.12em] text-text-muted uppercase">
-          Indonesia
+          Java, Indonesia
         </p>
         <p className="font-mono text-[10px] tabular-nums text-text-muted">
           105.75°E · -5.25°S

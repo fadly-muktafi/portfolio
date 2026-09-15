@@ -50,7 +50,14 @@ function Wave() {
   const accent = useRef(new THREE.Color("#9FDF9F"));
   const frame = useRef(0);
 
-  /* Base positions + per-particle luminance (radial falloff mask) */
+  /* Deterministic pseudo-random (stable across re-renders; lint: no impure
+   calls during render) */
+function seededRandom(i: number) {
+  const h = ((i * 2654435761) >>> 0) % 1000;
+  return h / 1000;
+}
+
+/* Base positions + per-particle luminance (radial falloff mask) */
   const { base, luminance, positions, colors } = useMemo(() => {
     const count = COLS * ROWS;
     const base = new Float32Array(count * 3);
@@ -72,7 +79,7 @@ function Wave() {
         positions[i * 3 + 2] = 0;
 
         const dist = Math.hypot(x - COLS / 2, y - ROWS / 2) / maxDist;
-        luminance[i] = Math.max(0.15, 1 - dist) * (0.55 + Math.random() * 0.45);
+        luminance[i] = Math.max(0.15, 1 - dist) * (0.55 + seededRandom(i) * 0.45);
 
         colors[i * 3] = luminance[i];
         colors[i * 3 + 1] = luminance[i];

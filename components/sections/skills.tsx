@@ -20,7 +20,7 @@ export function Skills() {
       aria-labelledby="skills-title"
       className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
-      <SectionHeading numeral={skills.numeral} title={skills.title} />
+      <SectionHeading title={skills.title} />
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         {/* Accent Playground */}

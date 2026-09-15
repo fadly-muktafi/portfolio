@@ -1,13 +1,11 @@
 /**
- * Shared section heading: oversized ghost numeral + display title.
- * Eyebrow is optional and capped at 2 site-wide (Visual-System §4.3).
+ * Shared section heading: display title (+ optional eyebrow).
+ * Eyebrow is capped at 2 site-wide (Visual-System §4.3).
  */
 export function SectionHeading({
-  numeral,
   title,
   eyebrow,
 }: {
-  numeral: string;
   title: string;
   eyebrow?: string;
 }) {

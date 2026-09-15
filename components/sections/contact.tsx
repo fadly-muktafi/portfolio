@@ -83,7 +83,7 @@ export function Contact({ githubSlot }: { githubSlot?: React.ReactNode }) {
       aria-labelledby="contact-title"
       className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
-      <SectionHeading numeral={contact.numeral} title={contact.title} />
+      <SectionHeading title={contact.title} />
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         {/* Form */}

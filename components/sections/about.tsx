@@ -11,7 +11,7 @@ export function About() {
       aria-labelledby="about-title"
       className="relative mx-auto max-w-360 px-5 py-24 md:px-10 md:py-40"
     >
-      <SectionHeading numeral={about.numeral} title={about.title} />
+      <SectionHeading title={about.title} />
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
         {/* Photo: grayscale at rest, color on hover (Visual-System §8) */}
