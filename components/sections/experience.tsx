@@ -97,7 +97,7 @@ export function Experience() {
                 <div className="p-6 md:p-10">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
-                      {item.year} · {item.period}
+                      {item.length} | {item.period}
                     </p>
                     <p className="font-mono text-xs tracking-[0.12em] text-text-muted uppercase">
                       {item.location}

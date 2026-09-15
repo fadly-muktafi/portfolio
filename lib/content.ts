@@ -6,7 +6,7 @@
 
 export interface ExperienceItem {
   id: string;
-  year: string;
+  length: string;
   company: string;
   role: string;
   period: string;
@@ -114,10 +114,10 @@ export const experience: {
   items: [
     {
       id: "sdd",
-      year: "2026",
+      length: "9 months",
       company: "PT Swadharma Duta Data",
       role: "Fullstack Developer Intern",
-      period: "Jan-Jun 2026",
+      period: "January - September 2026",
       location: "Jakarta",
       context:
         "An internal HR management system used daily by company staff, built on an enterprise Java stack.",
@@ -139,10 +139,10 @@ export const experience: {
     },
     {
       id: "ydp",
-      year: "2025",
+      length: "6 months",
       company: "Djalaludin Pane Foundation",
       role: "Fullstack Developer Intern",
-      period: "Jan-Jun 2025",
+      period: "January - June 2025",
       location: "Jakarta",
       context:
         "The foundation's website, the main public door to its programs and audience.",

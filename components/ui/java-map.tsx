@@ -236,7 +236,7 @@ export function JavaMap() {
       {/* Mono footer row */}
       <div className="mt-2 flex items-center justify-between">
         <p className="font-mono text-[10px] tracking-[0.12em] text-text-muted uppercase">
-          Java, Indonesia
+          Jakarta, Indonesia
         </p>
         <p className="font-mono text-[10px] tabular-nums text-text-muted">
           105.75°E · -5.25°S
