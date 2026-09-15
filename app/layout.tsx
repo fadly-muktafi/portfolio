@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { SmoothScroll } from "@/components/fx/smooth-scroll";
 import "./globals.css";
 
@@ -15,7 +16,7 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   // TODO(owner): confirm final domain before launch
-  metadataBase: new URL("https://fadlymuktafi.vercel.app"),
+  metadataBase: new URL("https://portfadlio.vercel.app"),
   title: "Fadly Muktafi | Software Engineer",
   description:
     "Portfolio of Fadly Muktafi, a fullstack software engineer from Jakarta building reliable web products, from database to interface.",
@@ -30,6 +31,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  /* Google Search Console verification (HTML tag method). Set
+     GOOGLE_SITE_VERIFICATION in env; absent = tag omitted. */
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -54,6 +60,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Film grain, global top layer (z-70, inert) */}
         <div aria-hidden className="grain" />
       </body>
+      {/* GA4 — loads only when NEXT_PUBLIC_GA_ID is set */}
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   );
 }

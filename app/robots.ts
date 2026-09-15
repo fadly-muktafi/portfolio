@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://fadlymuktafi.vercel.app/sitemap.xml",
+    sitemap: "https://portfadlio.vercel.app/sitemap.xml",
   };
 }
