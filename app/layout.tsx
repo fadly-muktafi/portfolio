@@ -53,6 +53,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             __html: `(function(){try{var h=localStorage.getItem("fm-accent-h");if(h!==null)document.documentElement.style.setProperty("--accent-h",h)}catch(e){}})()`,
           }}
         />
+        {/* Warm the GA4 connection so its fetch is cheaper later */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body className="min-h-dvh bg-bg font-display text-text">
         <SmoothScroll />

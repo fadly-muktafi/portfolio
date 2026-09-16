@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local dev server log
 dev-server.log
+
+# site audit by OpenSEO
+site-audit.json
